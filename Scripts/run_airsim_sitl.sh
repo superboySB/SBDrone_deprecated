@@ -1,6 +1,6 @@
 #!/bin/bash
-# 判断当前环境是否有设置instance_num，如果没有则默认为0
-# [ ! -z "$instance_num" ] && instance_num="0"
+instance_num=0
+[ -n "$1" ] && instance_num="$1"
 export PX4_SIM_MODEL=iris
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PARENT_DIR="$(dirname "$SCRIPT_DIR")"
