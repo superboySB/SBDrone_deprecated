@@ -37,7 +37,7 @@ docker run -itd --privileged --env=LOCAL_USER_ID="$(id -u)" --env=PX4_SIM_HOST_A
 其中，`–-env=PX4_SIM_HOST_ADDR=172.16.13.104` 容器添加`PX4_SIM_HOST_ADDR`环境变量，指定远端airsim主机地址；`–-name`后面指定此容器名称；`/src/Scripts/run_airsim_sitl.sh`表示容器执行此命令启动。容器启动后，使用`docker logs -f mypx4-0`将出现日志，当前px4处于等待连接服务端的状态，随即启动AirSim即可。
 
 
-## 运行开发机上的Airsim
+## 使用QGC在Airsim里手动控制PX4无人机（Optional）
 如果需要手动控制无人机(remote control)，则在QGroundControl里面，必须手动设置通信链接，QGC的自动连接功能在此处不起作用。首先，添加一个14550的UDP监听，并且需要在可选的指定server处添加`172.16.13.104:18570`，并点击连接，随即启动AirSim即可。
 
 
