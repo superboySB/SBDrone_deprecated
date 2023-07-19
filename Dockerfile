@@ -1,5 +1,5 @@
 # 目前统一使用项目常用的ros1-melodic (ubuntu-18.04)来做
-FROM px4io/px4-dev-ros-melodic:latest
+FROM px4io/px4-dev-ros2-foxy:latest
 
 # 安装系统依赖
 RUN apt-get update && \
@@ -17,7 +17,7 @@ RUN apt-get install ros-melodic-mavros ros-melodic-mavros-extras && \
     wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh && \
     bash ./install_geographiclib_datasets.sh
 
-# 在构建镜像时清理 apt 缓存，减小最终镜像的体积
+# 在构建镜像时清理 apt 缓存，减小最终镜像的体积（待最终稳定后考虑）
 # RUN apt-get clean && \
 #     rm -rf /var/lib/apt/lists/*
     

@@ -17,7 +17,7 @@ cd ~/SBDrone && docker build -t mypx4_image:v1 .
 ## 使用容器编译PX4源码
 执行以下命令启动容器在server后台运行，此容器将本地工程映射至其/src目录。
 ```sh
-docker run -itd --privileged -v /home/wangchao/daizipeng/SBDrone:/src:rw -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=:0 --env=LOCAL_USER_ID="$(id -u)" --network=host --name=mypx4-dev mypx4_image:v1 /bin/bash
+docker run -itd --privileged -v /home/wangchao/daizipeng/SBDrone:/src:rw -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=:0 --gpus all -env=LOCAL_USER_ID="$(id -u)" --network=host --name=mypx4-dev mypx4_image:v1 /bin/bash
 ```
 登录容器
 ```sh
@@ -32,7 +32,7 @@ cd /src/PX4-Autopilot/ && make clean && make px4_sitl_default none_iris
 ## 使用容器运行PX4无人机
 在server中启动容器，并以下面命令为例，打开一个无人机的instance：
 ```sh
-docker run -itd --privileged --env=LOCAL_USER_ID="$(id -u)" --env=PX4_SIM_HOST_ADDR=172.16.13.104 -v /home/wangchao/daizipeng/SBDrone:/src:rw -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=:0 --network=host --name=mypx4-0  mypx4_image:v1 bash /src/Scripts/run_airsim_sitl.sh
+docker run -itd --privileged --env=LOCAL_USER_ID="$(id -u)" --env=PX4_SIM_HOST_ADDR=172.16.13.104 -v /home/wangchao/daizipeng/SBDrone:/src:rw -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=:0 --network=host --gpus all --name=mypx4-0  mypx4_image:v1 bash /src/Scripts/run_airsim_sitl.sh
 ```
 其中，`–-env=PX4_SIM_HOST_ADDR=172.16.13.104` 容器添加`PX4_SIM_HOST_ADDR`环境变量，指定远端airsim主机地址；`–-name`后面指定此容器名称；`/src/Scripts/run_airsim_sitl.sh`表示容器执行此命令启动。容器启动后，使用`docker logs -f mypx4-0`将出现日志，当前px4处于等待连接服务端的状态，随即启动AirSim即可。
 

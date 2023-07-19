@@ -1,0 +1,16 @@
+{
+  "max_episodes" : 100000,
+  "state_space" : [2, 32, 32],
+  "action_space" : 2,
+  "buffer_Size": 15000,
+  "batch_size" : 32,
+  "learning_rate" : 0.001,
+  "discount_factor" : 0.95,
+  "replace_target_count_episode" : 150,
+  "num_drones" : 10,
+  "from_artifact" : "",
+  "projectName" : "MyProject2",
+  "envProcesses" : 1,
+  "storage_port" : 29000,
+  "headless" : false
+}
