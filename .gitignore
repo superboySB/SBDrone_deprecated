@@ -53,4 +53,6 @@ CATKIN_IGNORE
 
 # Projects
 PX4-Autopilot/
-AirSim
+tb_logs/
+best_model.zip
+evaluations.npz

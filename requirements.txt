@@ -1,0 +1,6 @@
+msgpack-rpc-python
+opencv-python
+airsim
+pygame
+setuptools==65.5.0
+stable-baselines3[extra]==1.8.0

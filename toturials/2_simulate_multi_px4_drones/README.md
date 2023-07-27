@@ -7,7 +7,7 @@
 ```sh
 docker run -itd --privileged --env=LOCAL_USER_ID="$(id -u)" --env=PX4_SIM_HOST_ADDR=172.16.13.104 -v /home/wangchao/daizipeng/SBDrone:/src:rw -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=:0 --network=host --name=mypx4-n  mypx4_image:v1 /bin/bash
 ```
-其中，`–-env=PX4_SIM_HOST_ADDR=172.18.240.1` 容器添加`PX4_SIM_HOST_ADDR`环境变量，指定远端airsim主机地址；`–-name`后面指定此容器名称。
+其中，`–-env=PX4_SIM_HOST_ADDR==172.16.13.104` 容器添加`PX4_SIM_HOST_ADDR`环境变量，指定远端airsim主机地址；`–-name`后面指定此容器名称。
 
 登录容器
 ```sh

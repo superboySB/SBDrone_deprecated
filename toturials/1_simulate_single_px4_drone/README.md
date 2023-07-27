@@ -7,11 +7,11 @@
 ## Install
 从github克隆PX4代码,通过--recursive参数，将依赖的submodule也一起拉取下来
 ```sh
-cd ~/SBDrone && git clone https://github.com/PX4/PX4-Autopilot.git --recursive && cd PX4-Autopilot && git checkout -b v1.13.3 v1.13.3
+cd /home/wangchao/daizipeng/SBDrone && git clone https://github.com/PX4/PX4-Autopilot.git --recursive && cd PX4-Autopilot && git checkout -b v1.13.3 v1.13.3
 ```
 构建px4镜像
 ```sh
-cd ~/SBDrone && docker build -t mypx4_image:v1 .
+cd /home/wangchao/daizipeng/SBDrone && docker build -t mypx4_image:v1 .
 ```
 
 ## 使用容器编译PX4源码
@@ -21,12 +21,12 @@ docker run -itd --privileged -v /home/wangchao/daizipeng/SBDrone:/src:rw -v /tmp
 ```
 登录容器
 ```sh
-docker exec -it --user $(id -u) mypx4-dev /bin/bash
+docker exec -it mypx4-dev /bin/bash
 ```
 
 **每次有代码更新**，均需要在这个`mypx4-dev`容器终端中执行编译命令,然后`exit`即可
 ```sh
-cd /src/PX4-Autopilot/ && make clean && make px4_sitl_default none_iris
+cd /src/PX4-Autopilot/ && make clean && make px4_sitl none_iris
 ```
 
 ## 使用容器运行PX4无人机
