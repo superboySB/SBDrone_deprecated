@@ -8,8 +8,8 @@ RUN apt-get update && \
 
 # 下载PX4飞控和offboard样例代码
 WORKDIR /home/user
-RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive && bash PX4-Autopilot/Tools/setup/ubuntu.sh --no-nuttx
-RUN cd PX4-Autopilot && make clean && make px4_sitl none_iris &
+RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive && bash PX4-Autopilot/Tools/setup/ubuntu.sh --no-nuttx && \
+    cd PX4-Autopilot && make clean && DONT_RUN=1 make px4_sitl gazebo
 RUN cd .. && git clone https://github.com/Jaeyoung-Lim/px4-offboard.git && cd px4-offboard && colcon build && cd ..
 RUN wget https://d176tv9ibo4jno.cloudfront.net/latest/QGroundControl.AppImage && chmod +x ./QGroundControl.AppImage
 
@@ -25,7 +25,9 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
 # 暂时需要两种权限的用户使用所有的功能
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc && \
     echo "source /opt/ros/foxy/setup.bash" >> /home/user/.bashrc && pkill -x px4 || true
+RUN usermod -aG sudo user && echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 WORKDIR /home/user
+RUN chmod 777 -R .
 
 # 安装mavros相关的依赖包 (可能已经不需要了)
 # RUN apt-get install ros-foxy-mavros ros-foxy-mavros-extras && \ 
