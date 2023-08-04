@@ -94,15 +94,3 @@ twist:
         y: 0.0
         z: 1.0" -r 20
 ```
-
-
-## 运行开发机上的Airsim
-如果需要手动控制无人机(remote control)，则在QGroundControl里面，必须手动设置通信链接，QGC的自动连接功能在此处不起作用。首先，添加一个14550的UDP监听，并且需要在可选的指定server处添加`172.16.13.104:18570`、`172.16.13.104:18571`、`172.16.13.104:18572`、`172.16.13.104:18573`，并点击连接，随即启动AirSim即可。
-
-
-## TroubleShooting
-### 1. 可以换一台网络好的机器解决docker拉不下来的问题。
-```sh
-docker save > <image-name>.tar <repository>:<tag>
-docker load < <image-name>.tar
-```

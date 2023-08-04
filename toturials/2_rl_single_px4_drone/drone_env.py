@@ -7,10 +7,11 @@ from argparse import ArgumentParser
 
 import gym
 from gym import spaces
-from airgym.envs.airsim_env import AirSimEnv
 
 
-class AirSimDroneEnv(AirSimEnv):
+
+
+class AirSimDroneEnv(gym.Env):
     def __init__(self, ip_address, step_length, image_shape):
         super().__init__(image_shape)
         self.step_length = step_length

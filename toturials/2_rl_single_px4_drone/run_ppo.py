@@ -8,20 +8,26 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv, VecTransposeImage
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3.common.callbacks import EvalCallback
+from drone_env import AirSimDroneEnv
 
 # Create a DummyVecEnv for main airsim gym env
-env = DummyVecEnv(
-    [
-        lambda: Monitor(
-            gym.make(
-                "airsim-drone-sample-v0",
-                ip_address="172.16.13.104",
+env = AirSimDroneEnv(ip_address="172.16.13.104",
                 step_length=0.25,
-                image_shape=(84, 84, 1),
-            )
-        )
-    ]
-)
+                image_shape=(84, 84, 1),)
+env = DummyVecEnv(env)
+
+# DummyVecEnv(
+#     [
+#         lambda: Monitor(
+#             gym.make(
+#                 "airsim-drone-sample-v0",
+#                 ip_address="172.16.13.104",
+#                 step_length=0.25,
+#                 image_shape=(84, 84, 1),
+#             )
+#         )
+#     ]
+# )
 
 # Wrap env as VecTransposeImage to allow SB to handle frame observations
 env = VecTransposeImage(env)

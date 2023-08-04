@@ -8,9 +8,10 @@ RUN apt-get update && \
 
 # 下载PX4飞控和offboard样例代码
 WORKDIR /home/user
-RUN git clone https://github.com/PX4/PX4-Autopilot.git --recursive && bash PX4-Autopilot/Tools/setup/ubuntu.sh --no-nuttx && \
+RUN git clone https://github.com/superboySB/PX4-Autopilot --recursive && bash PX4-Autopilot/Tools/setup/ubuntu.sh --no-nuttx && \
     cd PX4-Autopilot && make clean && DONT_RUN=1 make px4_sitl gazebo
-RUN cd .. && git clone https://github.com/Jaeyoung-Lim/px4-offboard.git && cd px4-offboard && colcon build && cd ..
+WORKDIR /home/user
+RUN git clone https://github.com/Jaeyoung-Lim/px4-offboard.git && cd px4-offboard && colcon build && cd ..
 RUN wget https://d176tv9ibo4jno.cloudfront.net/latest/QGroundControl.AppImage && chmod +x ./QGroundControl.AppImage
 
 # 安装px4_msgs和micro_ros_agent

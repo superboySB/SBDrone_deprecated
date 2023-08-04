@@ -16,7 +16,6 @@ docker exec -it --user=user mypx4-dev /bin/bash
 sudo chmod 777 -R .
 ```
 
-
 ## 使用QGC在Airsim里手动控制PX4无人机（Optional）
 如果需要手动控制无人机(remote control)，则在QGroundControl里面，必须手动设置通信链接，QGC的自动连接功能在此处不起作用。首先，添加一个14550的UDP监听，并且需要在可选的指定server处添加`172.16.13.104:18570`，并点击连接，随即启动AirSim即可。
 

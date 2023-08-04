@@ -13,8 +13,6 @@ docker run -itd --privileged -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DIS
 
 docker exec -it --user=user mypx4-dev /bin/bash
 
-sudo chmod 777 -R .
-
 bash PX4-Autopilot/Tools/simulation/sitl_multiple_run.sh 2
 
 
@@ -23,16 +21,6 @@ cd PRL4AirSim && pip install -r requirements.txt
 
 
 
-
-
-从github克隆PRL4AirSim原本代码，构建原版docker镜像，
-```sh
-cd ~/SBDrone && git clone https://github.com/SaundersJE97/PRL4AirSim && cd PRL4Airsim/docker && python build_airsim_image.py --base_image=nvidia/cudagl:10.0-devel-ubuntu18.04 --target_image=airsim_binary:10.0-devel-ubuntu18.04
-```
-检查镜像是否安装成功
-```sh
-docker images | grep airsim
-```
 
 
 ## TroubleShooting
