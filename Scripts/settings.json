@@ -1,0 +1,41 @@
+{
+    "SettingsVersion": 1.2,
+    "SimMode": "Multirotor",
+    "ClockType": "SteppableClock",
+	"PawnPaths":{
+		"DefaultQuadrotor":{"PawnBP":"Class'/Game/CustomAssets/BP_FlyingPawn.BP_FlyingPawn_C'"}
+	},
+    "Vehicles": {
+		"UAV_0":{
+			"VehicleType": "PX4Multirotor",
+			"PawnPath":"DefaultQuadrotor",
+			"UseSerial": false,
+            "LockStep": true,
+            "UseTcp": true,
+            "TcpPort": 4560,
+			"LocalHostIp": "172.16.13.104",
+			"ControlIp": "172.16.15.188",
+			"ControlPortLocal": 14540,
+            "ControlPortRemote": 14580,
+			"X": 0, "Y": 1, "Z": 0,
+			"Yaw": 0,
+			"Sensors":{
+				"Barometer":{
+					"SensorType": 1,
+					"Enabled": true,
+					"PressureFactorSigma": 0.0001825
+				}
+			},
+			"Parameters": {
+				"NAV_RCL_ACT": 0,
+				"NAV_DLL_ACT": 0,
+				"COM_OBL_ACT": 1,
+				"LPE_LAT": 47.641468,
+				"LPE_LON": -122.140165
+			},
+			"RC": {
+				"RemoteControlID": 1
+			  }
+		}
+    }
+}

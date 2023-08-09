@@ -10,7 +10,6 @@ client.armDisarm(True)
 
 # Async methods returns Future. Call join() to wait for task to complete.
 client.takeoffAsync()
-client.moveToPositionAsync(60, 500, 1200, 5).join()
 
 
 state = client.getMultirotorState(vehicle_name = 'UAV_0')

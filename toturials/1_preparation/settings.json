@@ -6,7 +6,7 @@
 		"DefaultQuadrotor":{"PawnBP":"Class'/Game/CustomAssets/BP_FlyingPawn.BP_FlyingPawn_C'"}
 	},
     "Vehicles": {
-		"Drone": {
+		"Drone0": {
 			"VehicleType": "PX4Multirotor",
 			"PawnPath":"DefaultQuadrotor",
 			"UseSerial": false,

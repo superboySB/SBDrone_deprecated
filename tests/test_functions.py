@@ -4,7 +4,7 @@ import airsim
 import numpy as np
 
 def convert_pos_UE_to_AS(origin_UE : np.array, pos_UE : np.array):
-    pos = np.zeros(3, dtype=np.float)
+    pos = np.zeros(3, dtype=float)
     pos[0] = pos_UE[0] - origin_UE[0]
     pos[1] = pos_UE[1] - origin_UE[1]
     pos[2] = - pos_UE[2] + origin_UE[2]
@@ -21,14 +21,16 @@ areans_train_long = np.array([
 ])
 
 
-client = airsim.MultirotorClient(ip="127.0.0.1", port=29001)
+client = airsim.MultirotorClient(ip="172.16.13.104")
 client.confirmConnection()
 client.reset()
 
-client.armDisarm(True, droneName)
-client.enableApiControl(True, droneName)
+client.enableApiControl(True, vehicle_name = droneName)
+
+
+client.armDisarm(True, vehicle_name = droneName)
 client.takeoffAsync(vehicle_name=droneName)
-time.sleep(2)
+time.sleep(10)
 
 client.client.call_async("resetVehicle", droneName,
                                     airsim.Pose(airsim.Vector3r(areans_train_long[0][0][0],

@@ -9,8 +9,6 @@ import gym
 from gym import spaces
 
 
-
-
 class AirSimDroneEnv(gym.Env):
     def __init__(self, ip_address, step_length, image_shape):
         super().__init__(image_shape)

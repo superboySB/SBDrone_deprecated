@@ -1,9 +1,7 @@
 搞一个preception-aware velocity control
 
 ## Requirements
-考虑到[官方教程](https://www.youtube.com/watch?v=e3HUKGAWdx0)里面的WSL2限制太多，为了便于部署，PX4在远程server（172.16.15.188）的docker里运行，然后airsim+QGC在本地windows11开发机（172.16.13.104）里运行。
-
-为了测试ROS2的offboard功能，可以把我构建的docker container作为虚拟机，后续验证流程可以参考这个[教程](https://github.com/Jaeyoung-Lim/px4-offboard/blob/master/doc/ROS2_PX4_Offboard_Tutorial.md)
+考虑到[官方教程](https://www.youtube.com/watch?v=e3HUKGAWdx0)里面的WSL2限制太多，为了便于部署，PX4+RL都建议在远程server（172.16.15.188）的docker里运行，同时airsim在本地windows11开发机（172.16.13.104）里运行。
 
 ## Install
 ```sh
@@ -12,13 +10,18 @@ docker build -t mypx4_image:v1 .
 docker run -itd --privileged -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY --gpus all --user=user --env=PX4_SIM_HOST_ADDR=172.16.13.104 --network=host --name=mypx4-dev mypx4_image:v1 /bin/bash
 
 docker exec -it --user=user mypx4-dev /bin/bash
-
-sudo chmod 777 -R .
 ```
+为了测试后续ROS2的offboard功能，可以把我构建的docker container作为虚拟机，后续验证流程可以参考这个[教程](https://github.com/Jaeyoung-Lim/px4-offboard/blob/master/doc/ROS2_PX4_Offboard_Tutorial.md)
 
 ## 使用QGC在Airsim里手动控制PX4无人机（Optional）
 如果需要手动控制无人机(remote control)，则在QGroundControl里面，必须手动设置通信链接，QGC的自动连接功能在此处不起作用。首先，添加一个14550的UDP监听，并且需要在可选的指定server处添加`172.16.13.104:18570`，并点击连接，随即启动AirSim即可。
 
+现在不需要，只需要设置这个属性即可随时接管无人机
+```sh
+"RC": {
+		"RemoteControlID": 1
+	}
+```
 
 ## TroubleShooting
 ### 1. 可以换一台网络好的机器解决docker拉不下来的问题。
