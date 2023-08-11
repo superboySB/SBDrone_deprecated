@@ -39,7 +39,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
 
 
 # 暂时需要两种权限的用户使用所有的功能
-RUN pip3 install --upgrade pip && pip3 install opencv-python opencv-contrib-python torch msgpack-rpc-python
+RUN pip3 install --upgrade pip && pip3 install sympy opencv-python opencv-contrib-python torch msgpack-rpc-python
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc && \
     echo "source /opt/ros/foxy/setup.bash" >> /home/user/.bashrc && pkill -x px4 || true
 RUN usermod -aG sudo user && echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers

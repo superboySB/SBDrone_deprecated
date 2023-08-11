@@ -10,18 +10,51 @@ docker build -t mypx4_image:v1 .
 docker run -itd --privileged -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY --gpus all --user=user --env=PX4_SIM_HOST_ADDR=172.16.13.104 --network=host --name=mypx4-dev mypx4_image:v1 /bin/bash
 
 docker exec -it --user=user mypx4-dev /bin/bash
+
+git clone https://github.com/superboySB/SBDrone && cd cd SBDrone && pip install -r requirements.txt && pip install -e .
 ```
-为了测试后续ROS2的offboard功能，可以把我构建的docker container作为虚拟机，后续验证流程可以参考这个[教程](https://github.com/Jaeyoung-Lim/px4-offboard/blob/master/doc/ROS2_PX4_Offboard_Tutorial.md)
+为了测试后续ROS2的offboard功能，可以把我构建的docker container作为虚拟机，后续验证流程可以参考这个[教程](https://github.com/Jaeyoung-Lim/px4-offboard/blob/master/doc/ROS2_PX4_Offboard_Tutorial.md)。如果不想用两台机器，想用一台机器做，可以考虑将Dockerfile中的github-token补全，并且取消对UE、Airsim编译的注释，运行`docker build -t mypx4_image:full .`，预计会生成一个300GB左右的image，请留好空间。
 
-## 使用QGC在Airsim里手动控制PX4无人机（Optional）
-如果需要手动控制无人机(remote control)，则在QGroundControl里面，必须手动设置通信链接，QGC的自动连接功能在此处不起作用。首先，添加一个14550的UDP监听，并且需要在可选的指定server处添加`172.16.13.104:18570`，并点击连接，随即启动AirSim即可。
 
-现在不需要，只需要设置这个属性即可随时接管无人机
-```sh
+## 消除碰撞体（Non-interactive Unreal Engine Custom Environments）
+We provide the environment presented within the paper to allow others to validate our approach. However, to create a custom environment, we recomend you follow the following steps to prevent agent interaction.
+
+### Remove ego-perspective rendering of other quadrotors
+To make the quadrotor invisible in the scene, change the 'Hidden in Scene Capture' to True. This will make it invisible to other drones but the spectator actor can still see it. Go to details, then rendering, this will show the setting 'ACtor Hidden In Game'.
+
+![](./images/MakeActorHidden.png)
+
+![](./images/MakeActorHiddenZoom.png)
+
+### Remove Collision boxes from all agents within the environment
+We need to specifically remove agent-agent interaction while also enabling environment interaction. Hence we need to define all components of the quadrotor blueprint 'BP_FlyingPawn' as 'Pawn' and ignore any overlaps that occour between this group. To do this, we modify the collision response within the agent blueprint.
+
+There are five components to change within the 'BP_FlyingPawn' blueprint: BodyMesh, Prop3, Prop2, Prop1, Prop0. For all of these, go to collisions, then change the collision presents to custom. Thange the Object Type to 'Pawn' and then in 'Object Responses' change the Pawn to Ignore as shown bellow.
+
+![](./images/CollisionPresets.png)
+
+Now to remove collisions between 'Pawns', we need to ignore the event 'ActorBeginOverlap' which we can do using a Blueprint Event Graph. Add the following event graph to 'BP_FlyingPawn'.
+
+![](./images/IgnoreCollisionBP.png)
+
+Agents will interact with the environment without interacting with each other.
+
+## 在Airsim里手动控制一台PX4无人机的测试
+### 方法一：使用QGC
+如果需要手动控制无人机(remote control)，则在QGroundControl里面，必须手动设置通信链接，QGC的自动连接功能在多个机器的时候不起作用，如果在同一台机器有时候没有问题。具体做法是，添加一个14550的UDP监听，并且需要在可选的指定server处添加`172.16.13.104:18570`，并点击连接，如果有多台则需要连接多次，端口要累加。对应地，需要开启多个PX4实例，其它参数配置可以参考[官方教程](https://microsoft.github.io/AirSim/px4_sitl/)，同样端口需要累加。
+
+### 方法二：不使用QGC
+在`settings.json`中对需要控制的无人机添加手柄id
+```json
 "RC": {
 		"RemoteControlID": 1
 	}
 ```
+打开一个airsim的UE实例，再开启一个PX4实例。
+```sh
+bash /home/user/PX4-Autopilot/Tools/simulation/sitl_multiple_run.sh 1
+```
+
 
 ## TroubleShooting
 ### 1. 可以换一台网络好的机器解决docker拉不下来的问题。

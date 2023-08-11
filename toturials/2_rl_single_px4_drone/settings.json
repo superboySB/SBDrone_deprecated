@@ -1,12 +1,15 @@
 {
-    "SettingsVersion": 1.2,
+    "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/master/docs/settings.md",
     "SimMode": "Multirotor",
-    "ClockType": "SteppableClock",
+    "ViewMode": "Manual",
+    "SettingsVersion": 1.2,
+    "ClockSpeed": 1.0,
+    "SubWindows": [],
 	"PawnPaths":{
 		"DefaultQuadrotor":{"PawnBP":"Class'/Game/CustomAssets/BP_FlyingPawn.BP_FlyingPawn_C'"}
 	},
     "Vehicles": {
-		"Drone": {
+		"Drone0": {
 			"VehicleType": "PX4Multirotor",
 			"PawnPath":"DefaultQuadrotor",
 			"UseSerial": false,
@@ -32,6 +35,206 @@
 			"Yaw": 0,
 			"Cameras": {
 				"depth_cam_0": {
+					"CaptureSettings": [
+						{
+							"FOV_Degrees": 90,
+							"ImageType": 1,
+							"Width": 32,
+							"Height": 32
+						}
+					],
+					"Pitch": 0.0,
+					"Roll": 0.0,
+					"Yaw": 0.0,
+					"X": 0.0,
+					"Y": 0.0,
+					"Z": -0.6
+				}
+			},
+			"Sensors":{
+				"Barometer":{
+				"SensorType": 1,
+				"Enabled": true,
+				"PressureFactorSigma": 0.0001825
+				}
+			}
+		},
+		"Drone1": {
+			"VehicleType": "PX4Multirotor",
+			"PawnPath":"DefaultQuadrotor",
+			"UseSerial": false,
+			"LockStep": true,
+			"UseTcp": true,
+			"TcpPort": 4561,
+			"LocalHostIp": "172.16.13.104",
+			"ControlIp": "172.16.15.188",
+			"ControlPortLocal": 14541,
+			"ControlPortRemote": 14581,
+			"Parameters": {
+				"NAV_RCL_ACT": 0,
+				"NAV_DLL_ACT": 0,
+				"COM_OBL_ACT": 1,
+				"LPE_LAT": 47.641468,
+				"LPE_LON": -122.140165
+			},
+			"AutoCreate": true,
+			"DefaultVehicleState": "Armed",
+			"X": 0,
+			"Y": 0,
+			"Z": -1,
+			"Yaw": 0,
+			"Cameras": {
+				"depth_cam_1": {
+					"CaptureSettings": [
+						{
+							"FOV_Degrees": 90,
+							"ImageType": 1,
+							"Width": 32,
+							"Height": 32
+						}
+					],
+					"Pitch": 0.0,
+					"Roll": 0.0,
+					"Yaw": 0.0,
+					"X": 0.0,
+					"Y": 0.0,
+					"Z": -0.6
+				}
+			},
+			"Sensors":{
+				"Barometer":{
+				"SensorType": 1,
+				"Enabled": true,
+				"PressureFactorSigma": 0.0001825
+				}
+			}
+		},
+		"Drone2": {
+			"VehicleType": "PX4Multirotor",
+			"PawnPath":"DefaultQuadrotor",
+			"UseSerial": false,
+			"LockStep": true,
+			"UseTcp": true,
+			"TcpPort": 4562,
+			"LocalHostIp": "172.16.13.104",
+			"ControlIp": "172.16.15.188",
+			"ControlPortLocal": 14542,
+			"ControlPortRemote": 14582,
+			"Parameters": {
+				"NAV_RCL_ACT": 0,
+				"NAV_DLL_ACT": 0,
+				"COM_OBL_ACT": 1,
+				"LPE_LAT": 47.641468,
+				"LPE_LON": -122.140165
+			},
+			"AutoCreate": true,
+			"DefaultVehicleState": "Armed",
+			"X": 0,
+			"Y": 0,
+			"Z": -2,
+			"Yaw": 0,
+			"Cameras": {
+				"depth_cam_2": {
+					"CaptureSettings": [
+						{
+							"FOV_Degrees": 90,
+							"ImageType": 1,
+							"Width": 32,
+							"Height": 32
+						}
+					],
+					"Pitch": 0.0,
+					"Roll": 0.0,
+					"Yaw": 0.0,
+					"X": 0.0,
+					"Y": 0.0,
+					"Z": -0.6
+				}
+			},
+			"Sensors":{
+				"Barometer":{
+				"SensorType": 1,
+				"Enabled": true,
+				"PressureFactorSigma": 0.0001825
+				}
+			}
+		},
+		"Drone3": {
+			"VehicleType": "PX4Multirotor",
+			"PawnPath":"DefaultQuadrotor",
+			"UseSerial": false,
+			"LockStep": true,
+			"UseTcp": true,
+			"TcpPort": 4563,
+			"LocalHostIp": "172.16.13.104",
+			"ControlIp": "172.16.15.188",
+			"ControlPortLocal": 14543,
+			"ControlPortRemote": 14583,
+			"Parameters": {
+				"NAV_RCL_ACT": 0,
+				"NAV_DLL_ACT": 0,
+				"COM_OBL_ACT": 1,
+				"LPE_LAT": 47.641468,
+				"LPE_LON": -122.140165
+			},
+			"AutoCreate": true,
+			"DefaultVehicleState": "Armed",
+			"X": 0,
+			"Y": 0,
+			"Z": -3,
+			"Yaw": 0,
+			"Cameras": {
+				"depth_cam_3": {
+					"CaptureSettings": [
+						{
+							"FOV_Degrees": 90,
+							"ImageType": 1,
+							"Width": 32,
+							"Height": 32
+						}
+					],
+					"Pitch": 0.0,
+					"Roll": 0.0,
+					"Yaw": 0.0,
+					"X": 0.0,
+					"Y": 0.0,
+					"Z": -0.6
+				}
+			},
+			"Sensors":{
+				"Barometer":{
+				"SensorType": 1,
+				"Enabled": true,
+				"PressureFactorSigma": 0.0001825
+				}
+			}
+		},
+		"Drone4": {
+			"VehicleType": "PX4Multirotor",
+			"PawnPath":"DefaultQuadrotor",
+			"UseSerial": false,
+			"LockStep": true,
+			"UseTcp": true,
+			"TcpPort": 4564,
+			"LocalHostIp": "172.16.13.104",
+			"ControlIp": "172.16.15.188",
+			"ControlPortLocal": 14544,
+			"ControlPortRemote": 14584,
+			"Parameters": {
+				"NAV_RCL_ACT": 0,
+				"NAV_DLL_ACT": 0,
+				"COM_OBL_ACT": 1,
+				"LPE_LAT": 47.641468,
+				"LPE_LON": -122.140165
+			},
+			"AutoCreate": true,
+			"DefaultVehicleState": "Armed",
+			"X": 0,
+			"Y": 0,
+			"Z": -4,
+			"Yaw": 0,
+			"Cameras": {
+				"depth_cam_4": {
 					"CaptureSettings": [
 						{
 							"FOV_Degrees": 90,
