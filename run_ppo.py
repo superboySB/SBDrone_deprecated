@@ -8,7 +8,7 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv, VecTransposeImage
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3.common.callbacks import EvalCallback
-from tests.drone_env import AirSimDroneEnv
+from drone_env import AirSimDroneEnv
 
 # Create a DummyVecEnv for main airsim gym env
 env = AirSimDroneEnv(ip_address="172.16.13.104",

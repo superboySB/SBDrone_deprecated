@@ -22,7 +22,7 @@ client.takeoffAsync(timeout_sec = 20, vehicle_name = 'UAV_1')
 # airsim.wait_key('Manual mode is setup. Press any key to send RC data to takeoff')
 
 
-# 会持续控制需要覆盖
+# 会持续控制，需要下一条命令覆盖
 client.moveByRC(rcdata = airsim.RCData(pitch = 1, throttle = 0.5, is_initialized = True, is_valid = True), vehicle_name='UAV_1')
 
 client.moveByRC(rcdata = airsim.RCData(pitch = 0, throttle = 0.1, is_initialized = True, is_valid = True), vehicle_name='UAV_1')

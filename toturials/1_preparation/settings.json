@@ -54,6 +54,9 @@
 				"Enabled": true,
 				"PressureFactorSigma": 0.0001825
 				}
+			},
+			"RC": {
+				"RemoteControlID": 1
 			}
 		}
     }

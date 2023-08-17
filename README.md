@@ -16,11 +16,11 @@ git clone https://github.com/superboySB/SBDrone && cd cd SBDrone && pip install 
 为了测试后续ROS2的offboard功能，可以把我构建的docker container作为虚拟机，后续验证流程可以参考这个[教程](https://github.com/Jaeyoung-Lim/px4-offboard/blob/master/doc/ROS2_PX4_Offboard_Tutorial.md)。如果不想用两台机器，想用一台机器做，可以考虑将Dockerfile中的github-token补全，并且取消对UE、Airsim编译的注释，运行`docker build -t mypx4_image:full .`，预计会生成一个300GB左右的image，请留好空间。
 
 
-## 消除碰撞体（Non-interactive Unreal Engine Custom Environments）
+## 消除碰撞体（以下是Non-interactive Unreal Engine Custom Environments的英文教程）
 We provide the environment presented within the paper to allow others to validate our approach. However, to create a custom environment, we recomend you follow the following steps to prevent agent interaction.
 
 ### Remove ego-perspective rendering of other quadrotors
-To make the quadrotor invisible in the scene, change the 'Hidden in Scene Capture' to True. This will make it invisible to other drones but the spectator actor can still see it. Go to details, then rendering, this will show the setting 'ACtor Hidden In Game'.
+To make the quadrotor invisible in the scene, change the 'Hidden in Scene Capture' to True. This will make it invisible to other drones but the spectator actor can still see it. Go to details, then rendering, this will show the setting 'Actor Hidden In Game'.
 
 ![](./images/MakeActorHidden.png)
 
@@ -55,6 +55,17 @@ Agents will interact with the environment without interacting with each other.
 bash /home/user/PX4-Autopilot/Tools/simulation/sitl_multiple_run.sh 1
 ```
 
+## 测试强化学习
+先打开UE实例，然后依次
+```sh
+bash /home/user/PX4-Autopilot/Tools/simulation/sitl_multiple_run.sh 5
+
+python sbrl/Storage.py
+
+python sbrl/
+
+
+```
 
 ## TroubleShooting
 ### 1. 可以换一台网络好的机器解决docker拉不下来的问题。

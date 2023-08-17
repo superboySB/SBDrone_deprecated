@@ -2,4 +2,5 @@ msgpack-rpc-python
 opencv-python
 pygame
 setuptools==65.5.1
+wandb
 stable-baselines3[extra]==1.8.0

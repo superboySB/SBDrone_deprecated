@@ -3,9 +3,10 @@
     "SimMode": "Multirotor",
     "ViewMode": "Manual",
     "SettingsVersion": 1.2,
-    "ClockSpeed": 1.0,
+    "ClockSpeed": 8.0,
+    "ApiServerPort": 29000,
     "SubWindows": [],
-	"PawnPaths":{
+    "PawnPaths":{
 		"DefaultQuadrotor":{"PawnBP":"Class'/Game/CustomAssets/BP_FlyingPawn.BP_FlyingPawn_C'"}
 	},
     "Vehicles": {
@@ -81,7 +82,7 @@
 			"DefaultVehicleState": "Armed",
 			"X": 0,
 			"Y": 0,
-			"Z": -1,
+			"Z": 0,
 			"Yaw": 0,
 			"Cameras": {
 				"depth_cam_1": {
@@ -131,7 +132,7 @@
 			"DefaultVehicleState": "Armed",
 			"X": 0,
 			"Y": 0,
-			"Z": -2,
+			"Z": 0,
 			"Yaw": 0,
 			"Cameras": {
 				"depth_cam_2": {
@@ -181,7 +182,7 @@
 			"DefaultVehicleState": "Armed",
 			"X": 0,
 			"Y": 0,
-			"Z": -3,
+			"Z": 0,
 			"Yaw": 0,
 			"Cameras": {
 				"depth_cam_3": {
@@ -231,7 +232,7 @@
 			"DefaultVehicleState": "Armed",
 			"X": 0,
 			"Y": 0,
-			"Z": -4,
+			"Z": 0,
 			"Yaw": 0,
 			"Cameras": {
 				"depth_cam_4": {
