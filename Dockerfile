@@ -41,7 +41,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
 # 安装sample factory
 WORKDIR /home/user
 RUN pip3 install --upgrade pip && pip3 install sympy opencv-python opencv-contrib-python torch msgpack-rpc-python
-RUN https://github.com/superboySB/sample-factory.git && cd sample-factory && pip3 install -e .
+RUN git clone https://github.com/superboySB/sample-factory.git && cd sample-factory && pip3 install -e .
 
 # 暂时需要两种权限的用户使用所有的功能
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc && \
