@@ -5,11 +5,13 @@
 
 ## Install
 ```sh
-docker build -t mypx4_image:v1 .
+docker build -t sbdrone_image:v1 .
 
-docker run -itd --privileged -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY --gpus all --user=user --env=PX4_SIM_HOST_ADDR=172.16.13.104 --network=host --name=mypx4-dev mypx4_image:v1 /bin/bash
+docker run -itd --privileged -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY --gpus all --user=user --env=PX4_SIM_HOST_ADDR=172.16.13.104 --network=host --name=sbdrone sbdrone_image:v1 /bin/bash
 
-docker exec -it --user=user mypx4-dev /bin/bash
+docker exec -it --user=user sbdrone /bin/bash
+
+cd sample-factory && pip install -e . && cd ..
 
 git clone https://github.com/superboySB/SBDrone && cd cd SBDrone && pip install -r requirements.txt && pip install -e .
 ```

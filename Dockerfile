@@ -23,6 +23,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
     rosdep update && rosdep install --from-paths src --ignore-src -y && colcon build && . install/local_setup.sh && \
     ros2 run micro_ros_setup create_agent_ws.sh && ros2 run micro_ros_setup build_agent.sh
 
+
 # [硬盘空间若不足1T一定慎选] 下载UE4和魔改AirSim的代码，并编译默认版本（Ubuntu开发机上跑仿真可能需要，但建议用Windows开发机跑仿真，客户端可完美支持编译源码素材）
 # [Windows可参考教程：https://www.zhihu.com/column/multiUAV]
 # WORKDIR /home/user  
@@ -37,9 +38,12 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
 #     wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh && \
 #     bash ./install_geographiclib_datasets.sh
 
+# 安装sample factory
+WORKDIR /home/user
+RUN pip3 install --upgrade pip && pip3 install sympy opencv-python opencv-contrib-python torch msgpack-rpc-python
+RUN https://github.com/superboySB/sample-factory.git && cd sample-factory && pip3 install -e .
 
 # 暂时需要两种权限的用户使用所有的功能
-RUN pip3 install --upgrade pip && pip3 install sympy opencv-python opencv-contrib-python torch msgpack-rpc-python
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc && \
     echo "source /opt/ros/foxy/setup.bash" >> /home/user/.bashrc && pkill -x px4 || true
 RUN usermod -aG sudo user && echo 'user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
