@@ -92,3 +92,4 @@ isaacgym/
 tb_logs/
 best_model.zip
 evaluations.npz
+sbdrone.tar

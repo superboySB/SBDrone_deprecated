@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get -y --no-install-recommends install software-properties-common gedit vim tmux net-tools apt-utils git fuse gstreamer1.0-plugins-bad \
     gstreamer1.0-libav gstreamer1.0-gl libqt5gui5 libfuse2 htop libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev mesa-common-dev make zip \
-    unzip vulkan-utils mesa-vulkan-drivers pigz libegl1 git-lfs gcc-8 g++-8
+    unzip vulkan-utils mesa-vulkan-drivers pigz libegl1 git-lfs gcc-8 g++-8 python3-tk
 
 # Force gcc 8 to avoid CUDA 10 build issues on newer base OS
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 8
@@ -57,14 +57,18 @@ ENV PATH="/home/user/.local/bin:$PATH"
 RUN cd /home/user/isaacgym/python && pip3 install --upgrade pip && pip3 install -e .
 ENV NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all
 
-# 安装sample factory
+# 安装IsaacGymEnvs
 WORKDIR /home/user
-RUN pip3 install sympy opencv-python opencv-contrib-python msgpack-rpc-python
-RUN git clone https://github.com/superboySB/sample-factory.git && cd sample-factory && pip3 install -e .
+RUN git clone https://github.com/NVIDIA-Omniverse/IsaacGymEnvs.git && cd IsaacGymEnvs && pip install -e .
 
 # 安装pytorch3D
 WORKDIR /home/user
 RUN git clone https://github.com/facebookresearch/pytorch3d.git && cd pytorch3d && pip3 install -e .
+
+# 安装sample factory
+WORKDIR /home/user
+RUN pip3 install opencv-python opencv-contrib-python msgpack-rpc-python sympy tkinter
+RUN git clone https://github.com/superboySB/sample-factory.git && cd sample-factory && pip3 install -e .
 
 # 暂时需要两种权限的用户使用所有的功能
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc && \
