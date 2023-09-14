@@ -1,10 +1,22 @@
 # 目前使用较为稳定的ros2-foxy (ubuntu-20.04)来做
 FROM px4io/px4-dev-ros2-foxy:latest
+ENV DEBIAN_FRONTEND=noninteractive
 
 # 安装系统依赖
 RUN apt-get update && \
     apt-get -y --no-install-recommends install software-properties-common gedit vim tmux net-tools apt-utils git fuse gstreamer1.0-plugins-bad \
-    gstreamer1.0-libav gstreamer1.0-gl libqt5gui5 libfuse2 htop
+    gstreamer1.0-libav gstreamer1.0-gl libqt5gui5 libfuse2 htop libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev mesa-common-dev make zip \
+    unzip vulkan-utils mesa-vulkan-drivers pigz libegl1 git-lfs gcc-8 g++-8
+
+# Force gcc 8 to avoid CUDA 10 build issues on newer base OS
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 8
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 8
+
+# WAR for eglReleaseThread shutdown crash in libEGL_mesa.so.0 (ensure it's never detected/loaded)
+# Can't remove package libegl-mesa0 directly (because of libegl1 which we need)
+RUN rm /usr/lib/x86_64-linux-gnu/libEGL_mesa.so.0 /usr/lib/x86_64-linux-gnu/libEGL_mesa.so.0.0.0 /usr/share/glvnd/egl_vendor.d/50_mesa.json
+COPY docker/nvidia_icd.json /usr/share/vulkan/icd.d/nvidia_icd.json
+COPY docker/10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json
 
 # 下载魔改PX4飞控和offboard样例代码
 WORKDIR /home/user
@@ -24,7 +36,7 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
     ros2 run micro_ros_setup create_agent_ws.sh && ros2 run micro_ros_setup build_agent.sh
 
 
-# [硬盘空间若不足1T一定慎选] 下载UE4和魔改AirSim的代码，并编译默认版本（Ubuntu开发机上跑仿真可能需要，但建议用Windows开发机跑仿真，客户端可完美支持编译源码素材）
+# [硬盘空间若不足1T一定慎选] 下载UE4和魔改AirSim的代码，并编译默认版本（Ubuntu开发机上跑仿真需要，但建议还是用Windows开发机跑仿真，客户端可完美支持编译源码素材）
 # [Windows可参考教程：https://www.zhihu.com/column/multiUAV]
 # WORKDIR /home/user  
 # RUN git clone --single-branch --branch 4.27 --depth 1 https://<personal-github-token>@github.com/EpicGames/UnrealEngine.git
@@ -38,10 +50,21 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
 #     wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh && \
 #     bash ./install_geographiclib_datasets.sh
 
+# 安装isaacgym
+# [注意] 涉及License问题，需要先去获取IsaacGym_Preview_4_Package，并且将里面的isaacgym拖到项目目录中
+COPY isaacgym /home/user/isaacgym/
+ENV PATH="/home/user/.local/bin:$PATH"
+RUN cd /home/user/isaacgym/python && pip3 install --upgrade pip && pip3 install -e .
+ENV NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all
+
 # 安装sample factory
 WORKDIR /home/user
-RUN pip3 install --upgrade pip && pip3 install sympy opencv-python opencv-contrib-python torch msgpack-rpc-python
+RUN pip3 install sympy opencv-python opencv-contrib-python msgpack-rpc-python
 RUN git clone https://github.com/superboySB/sample-factory.git && cd sample-factory && pip3 install -e .
+
+# 安装pytorch3D
+WORKDIR /home/user
+RUN git clone https://github.com/facebookresearch/pytorch3d.git && cd pytorch3d && pip3 install -e .
 
 # 暂时需要两种权限的用户使用所有的功能
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc && \
