@@ -1,6 +1,19 @@
-# 目前使用较为稳定的ros2-foxy (ubuntu-20.04)来做
+# 拉取镜像前明确相应配置
+ARG DEBIAN_FRONTEND=noninteractive
+ARG BASE_DIST=ubuntu20.04
+ARG CUDA_VERSION=11.4.2
+ARG ISAACSIM_VERSION=2022.2.1
+
+# https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim
+FROM nvcr.io/nvidia/isaac-sim:${ISAACSIM_VERSION} as isaac-sim
+
+# https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cudagl
+FROM nvidia/cudagl:${CUDA_VERSION}-base-${BASE_DIST}
+
+
+
 FROM px4io/px4-dev-ros2-foxy:latest
-ENV DEBIAN_FRONTEND=noninteractive
+
 
 # 安装系统依赖
 RUN apt-get update && \
@@ -50,16 +63,16 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && mkdir microros_ws && cd microros_ws && \
 #     wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh && \
 #     bash ./install_geographiclib_datasets.sh
 
-# 安装isaacgym
+# [暂时先安装它的爸爸] 安装isaacgym
 # [注意] 涉及License问题，需要先去获取IsaacGym_Preview_4_Package，并且将里面的isaacgym拖到项目目录中
-COPY isaacgym /home/user/isaacgym/
-ENV PATH="/home/user/.local/bin:$PATH"
-RUN cd /home/user/isaacgym/python && pip3 install --upgrade pip && pip3 install -e .
-ENV NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all
+# COPY isaacgym /home/user/isaacgym/
+# ENV PATH="/home/user/.local/bin:$PATH"
+# RUN cd /home/user/isaacgym/python && pip3 install --upgrade pip && pip3 install -e .
+# ENV NVIDIA_VISIBLE_DEVICES=all NVIDIA_DRIVER_CAPABILITIES=all
 
 # 安装IsaacGymEnvs
-WORKDIR /home/user
-RUN git clone https://github.com/NVIDIA-Omniverse/IsaacGymEnvs.git && cd IsaacGymEnvs && pip install -e .
+# WORKDIR /home/user
+# RUN git clone https://github.com/NVIDIA-Omniverse/IsaacGymEnvs.git && cd IsaacGymEnvs && pip install -e .
 
 # 安装pytorch3D
 WORKDIR /home/user

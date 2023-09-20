@@ -1,13 +1,21 @@
-搞一个preception-aware velocity control
+从模型在环（MITL）到软硬件在环（SITL/HITL）再到实测（REAL），搞一个对UAV的preception-aware velocity control，下面就让我们开始吧
 
-## Requirements
-考虑到[官方教程](https://www.youtube.com/watch?v=e3HUKGAWdx0)里面的WSL2限制太多，为了便于部署，PX4+RL都建议在远程server（172.16.15.188）的docker里运行，同时airsim在本地windows11开发机（172.16.13.104）里运行。
+# 模型在环（Model-in-the-loop, MITL）
 
 ## Install
 ```sh
-docker build --network host -t sbdrone_image:v1 .
 
-docker run -itd --privileged -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY --gpus all --user=user --env=PX4_SIM_HOST_ADDR=172.23.53.8 --network=host --name=sbdrone sbdrone_image:v1 /bin/bash
+```
+
+# 软硬件在环（SITL/HIL）
+考虑到[官方教程](https://www.youtube.com/watch?v=e3HUKGAWdx0)里面的WSL2限制太多，为了便于部署，PX4+RL都建议在远程server（172.16.15.188）的docker里运行，同时airsim在本地windows11开发机（172.16.13.104）里运行。
+
+
+## Install
+```sh
+docker build --network host -t sbdrone_image:sitl-v1 .
+
+docker run -itd --privileged -v /tmp/.X11-unix:/tmp/.X11-unix:ro -e DISPLAY=$DISPLAY --gpus all --user=user --env=PX4_SIM_HOST_ADDR=172.23.53.8 --network=host --name=sitl sbdrone_image:sitl-v1 /bin/bash
 
 docker exec -it --user=user sbdrone /bin/bash
 
@@ -85,3 +93,6 @@ export PX4_SIM_HOST_ADDR=172.18.240.1
 
 ## 4. 我想修改编译后的UE游戏的窗口等设置
 https://blog.csdn.net/qq_33727884/article/details/89487292
+
+
+# 实际测试（REAL）
