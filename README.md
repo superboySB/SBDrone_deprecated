@@ -1,13 +1,45 @@
-从模型在环（MITL）到软硬件在环（SITL/HITL）再到实测（REAL），搞一个对UAV的preception-aware velocity control，下面就让我们开始吧
+从模型在环（MITL）、软件在环（SITL）、硬件在环（HITL）再到实测（REAL），搞一个对UAV的preception-aware velocity control，下面就让我们开始吧。
 
-# 模型在环（Model-in-the-loop, MITL）
+# 模型在环（Model-in-the-loop, MITL）仿真训练
 
 ## Install
+找一台强大的服务器，安装nvidia最新驱动、nvidia docker，并通过如下的NGC container安装全部依赖
 ```sh
+docker login nvcr.io
+
+docker build --pull --network host -t sbdrone_image:v1 -f docker/simulation.dockerfile docker
+
+docker run --name sbdrone --entrypoint /bin/bash \
+  -itd --privileged --gpus all -e "ACCEPT_EULA=Y" --network=host \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:ro -v $HOME/.Xauthority:/root/.Xauthority -e DISPLAY=$DISPLAY \
+  -v /usr/share/vulkan/icd.d/nvidia_icd.json:/etc/vulkan/icd.d/nvidia_icd.json \
+  -v /usr/share/vulkan/implicit_layer.d/nvidia_layers.json:/etc/vulkan/implicit_layer.d/nvidia_layers.json \
+  -v /usr/share/glvnd/egl_vendor.d/10_nvidia.json:/usr/share/glvnd/egl_vendor.d/10_nvidia.json \
+  -v ~/docker/isaac-sim/cache/ov:/root/.cache/ov:rw \
+  -v ~/docker/isaac-sim/cache/pip:/root/.cache/pip:rw \
+  -v ~/docker/isaac-sim/cache/glcache:/root/.cache/nvidia/GLCache:rw \
+  -v ~/docker/isaac-sim/cache/computecache:/root/.nv/ComputeCache:rw \
+  -v ~/docker/isaac-sim/logs:/root/.nvidia-omniverse/logs:rw \
+  -v ~/docker/isaac-sim/config:/root/.nvidia-omniverse/config:rw \
+  -v ~/docker/isaac-sim/data:/root/.local/share/ov/data:rw \
+  -v ~/docker/isaac-sim/documents:/root/Documents:rw \
+  -v ~/docker/isaac-sim/cache/kit:/isaac-sim/kit/cache/Kit:rw \
+  sbdrone_image:v1
+
+docker exec -it sbdrone /bin/bash
 
 ```
+以headless app方式启动，并且尝试使用Omniverse Streaming Client
+```sh
+git clone https://github.com/superboySB/SBDrone
+```
 
-# 软硬件在环（SITL/HIL）
+
+# 软件在环（Software-in-the-loop, SITL）仿真训练
+
+`source /opt/ros/foxy/setup.bash`
+
+# 硬件在环（Hardware-in-the-loop, HITL）调试
 考虑到[官方教程](https://www.youtube.com/watch?v=e3HUKGAWdx0)里面的WSL2限制太多，为了便于部署，PX4+RL都建议在远程server（172.16.15.188）的docker里运行，同时airsim在本地windows11开发机（172.16.13.104）里运行。
 
 
@@ -95,4 +127,4 @@ export PX4_SIM_HOST_ADDR=172.18.240.1
 https://blog.csdn.net/qq_33727884/article/details/89487292
 
 
-# 实际测试（REAL）
+# 实际（REAL）部署测试
