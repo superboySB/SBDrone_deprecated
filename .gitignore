@@ -87,4 +87,4 @@ share/python-wheels/
 MANIFEST
 
 # Projects
-sbdrone.tar
+sbdrone_image.tar.*

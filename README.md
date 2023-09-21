@@ -108,11 +108,18 @@ python sbrl/
 ```
 
 ## TroubleShooting
-### 1. 可以换一台网络好的机器解决docker拉不下来的问题。
+### 1. 可以换一台网络好的机器直接拉镜像副本，解决docker拉不下来的问题
 ```sh
-docker save > <image-name>.tar <repository>:<tag>
+docker save > <image-name>.tar sbdrone_image:v1
 docker load < <image-name>.tar
 ```
+
+如果想分享，可以配置一个https://transfer.sh/，分块来存：
+```sh
+docker save sbdrone_image:v1 | split -b 5G -d - "sbdrone_image.tar.part."
+cat sbdrone_image.tar.part.* | docker load
+```
+
 ### 2. 关于"WSL2本地跑PX4+Windows跑AirSim+Windows跑QGC"的连接问题
 如果不用docker，而是在WSL本地跑cmake装PX4来调试，连接问题也会很烦。首先解决PX4与airsim的连接问题，需要在windows的powershell里用`ipconfig`来找本机的WSL IPv4 Address，这需要设置到AirSim中`settings.json`的`LocalHostIp`属性，以及上述教程中所有`PX4_SIM_HOST_ADDR`中。之后每次跑PX4以前，甚至需要人为指定环境变量来找windows本机，例如：
 ```sh
