@@ -25,16 +25,15 @@ INSTALL_REQUIRES = [
     "protobuf==3.20.2",
     # gym
     "gym==0.21.0",
-    "importlib-metadata~=4.13.0",
-    "setuptools<=66"  # setuptools 67.0 breaks gym
+    "importlib-metadata==4.13.0",
+    "setuptools==65.5.0",
+    "wheel<0.40.0",
     # data collection
     "h5py",
 ]
 
 # Extra dependencies for RL agents
 EXTRAS_REQUIRE = {
-    "sb3": ["stable-baselines3>=1.5,<=1.8", "tensorboard"],
-    "skrl": ["skrl>=0.10.0"],
     "rl_games": ["rl-games==1.5.2"],
     "rsl_rl": ["rsl_rl@git+https://github.com/leggedrobotics/rsl_rl.git"],
     "robomimic": ["robomimic@git+https://github.com/ARISE-Initiative/robomimic.git"],

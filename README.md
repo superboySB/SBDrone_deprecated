@@ -26,11 +26,14 @@ docker run --name sbdrone --entrypoint /bin/bash \
   sbdrone_image:v1
 
 docker exec -it sbdrone /bin/bash
-
 ```
 以headless app方式启动，并且尝试使用Omniverse Streaming Client
 ```sh
 git clone https://github.com/superboySB/SBDrone
+
+ln -s /issac_sim _isaac_sim      && ./orbit.sh --install && ./orbit.sh --extra
+
+bash ./orbit.sh --vscode
 ```
 
 

@@ -33,7 +33,7 @@ ENV ROS_DISTRO=foxy
 RUN apt-get update -q && \
     apt-get upgrade -yq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends keyboard-configuration language-pack-en wget curl git build-essential ca-certificates \
-    tzdata tmux gnupg2 vim sudo lsb-release locales bash-completion iproute2 iputils-ping net-tools dnsutils htop make zip unzip cmake 
+    tzdata tmux gnupg2 vim sudo lsb-release locales bash-completion iproute2 iputils-ping net-tools dnsutils htop make zip unzip cmake dos2unix
 RUN locale-gen en_US.UTF-8
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
@@ -110,15 +110,14 @@ COPY --from=isaac-sim /etc/vulkan/icd.d/nvidia_icd.json /etc/vulkan/implicit_lay
 
 # OmniIssacGym
 WORKDIR /workspace
-RUN git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs && cd OmniIsaacGymEnvs && \
-    /isaac-sim/python.sh -m pip install -U pip && /isaac-sim/python.sh -m pip install -e .
+RUN git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs && cd OmniIsaacGymEnvs \
+    && /isaac-sim/python.sh -m pip install -U pip setuptools && /isaac-sim/python.sh -m pip install -e .
 
 # Orbit
-ENV ISAACSIM_PATH /isaac-sim
+ENV ISAACSIM_PATH=/isaac-sim
 WORKDIR /workspace
-RUN git clone https://github.com/superboySB/SBDrone && cd SBDrone && ln -s ${ISAACSIM_PATH} _isaac_sim && \
-    ./orbit.sh --install && ./orbit.sh --extra
-
+RUN git clone https://github.com/superboySB/SBDrone && chmod 777 -R . && cd SBDrone \
+    && ln -s ${ISAACSIM_PATH} _isaac_sim && dos2unix ./orbit.sh && ./orbit.sh --install && ./orbit.sh --extra
 
 # Add symlink
 WORKDIR /isaac-sim
