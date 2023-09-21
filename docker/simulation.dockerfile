@@ -1,18 +1,17 @@
+# https://hub.docker.com/_/ubuntu/tags
+# FROM ubuntu:focal as builder
+# RUN apt-get update
+# RUN apt-get install -y curl
+# RUN apt-get install -y --no-install-recommends gcc libc-dev
+# RUN curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c
+# RUN gcc -Wall /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec
+# RUN chown root:root /usr/local/bin/su-exec
+# RUN chmod 0755 /usr/local/bin/su-exec
+
 ARG DEBIAN_FRONTEND=noninteractive
 ARG BASE_DIST=ubuntu20.04
 ARG CUDA_VERSION=11.4.2
 ARG ISAACSIM_VERSION=2022.2.1
-ARG VULKAN_SDK_VERSION=1.3.224.1 
-
-# https://hub.docker.com/_/ubuntu/tags
-FROM ubuntu:focal as builder
-RUN apt-get update
-RUN apt-get install -y curl
-RUN apt-get install -y --no-install-recommends gcc libc-dev
-RUN curl -o /usr/local/bin/su-exec.c https://raw.githubusercontent.com/ncopa/su-exec/master/su-exec.c
-RUN gcc -Wall /usr/local/bin/su-exec.c -o/usr/local/bin/su-exec
-RUN chown root:root /usr/local/bin/su-exec
-RUN chmod 0755 /usr/local/bin/su-exec
 
 # https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim
 FROM nvcr.io/nvidia/isaac-sim:${ISAACSIM_VERSION} as isaac-sim
@@ -33,8 +32,8 @@ ENV ROS_DISTRO=foxy
 # ROS2-foxy
 RUN apt-get update -q && \
     apt-get upgrade -yq && \
-    apt-get install -yq --no-install-recommends keyboard-configuration language-pack-en wget curl git build-essential ca-certificates tzdata tmux gnupg2 \
-        vim sudo lsb-release locales bash-completion iproute2 iputils-ping net-tools dnsutils htop make zip unzip gcc libc-dev
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends keyboard-configuration language-pack-en wget curl git build-essential ca-certificates \
+    tzdata tmux gnupg2 vim sudo lsb-release locales bash-completion iproute2 iputils-ping net-tools dnsutils htop make zip unzip
 RUN locale-gen en_US.UTF-8
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
@@ -70,6 +69,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Download the Vulkan SDK and extract the headers, loaders, layers and binary utilities
+ARG VULKAN_SDK_VERSION=1.3.224.1 
 RUN wget -q --show-progress \
     --progress=bar:force:noscroll \
     https://sdk.lunarg.com/sdk/download/${VULKAN_SDK_VERSION}/linux/vulkansdk-linux-x86_64-${VULKAN_SDK_VERSION}.tar.gz \
