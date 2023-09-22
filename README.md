@@ -29,11 +29,12 @@ docker exec -it sbdrone /bin/bash
 ```
 以headless app方式启动，并且尝试使用Omniverse Streaming Client
 ```sh
-git clone https://github.com/superboySB/SBDrone
+git clone https://github.com/superboySB/SBDrone && cd SBDrone
 
-ln -s /issac_sim _isaac_sim      && ./orbit.sh --install && ./orbit.sh --extra
+ln -s /isaac-sim _isaac_sim  && dos2unix ./orbit.sh && bash ./orbit.sh --install && bash ./orbit.sh --extra
 
-bash ./orbit.sh --vscode
+bash ./orbit.sh -p source/standalone/workflows/rl_games/train.py --task Isaac-Ant-v0 --headless
+
 ```
 
 

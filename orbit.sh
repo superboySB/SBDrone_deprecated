@@ -12,7 +12,6 @@ tabs 4
 
 # get source directory
 export ORBIT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-
 #==
 # Helper functions
 #==
