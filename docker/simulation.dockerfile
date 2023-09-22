@@ -119,7 +119,7 @@ ENV TERM=xterm
 WORKDIR /workspace
 RUN git clone https://github.com/superboySB/SBDrone && chmod 777 -R . && cd SBDrone \
     && ln -s ${ISAACSIM_PATH} _isaac_sim && dos2unix ./orbit.sh \
-    && ./orbit.sh -p -m pip install setuptools==63.2.0 \
+    && ./orbit.sh -p -m pip install setuptools==65.5.1 wheel==0.38.4 \
     && ./orbit.sh --install && ./orbit.sh --extra
 
 # Add symlink
