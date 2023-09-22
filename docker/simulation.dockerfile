@@ -111,14 +111,16 @@ COPY --from=isaac-sim /etc/vulkan/icd.d/nvidia_icd.json /etc/vulkan/implicit_lay
 # OmniIssacGym
 WORKDIR /workspace
 RUN git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs && cd OmniIsaacGymEnvs \
-    && /isaac-sim/python.sh -m pip install -U pip setuptools && /isaac-sim/python.sh -m pip install -e .
+    && /isaac-sim/python.sh -m pip install -U pip && /isaac-sim/python.sh -m pip install -e .
 
 # Orbit
 ENV ISAACSIM_PATH=/isaac-sim
 ENV TERM=xterm
 WORKDIR /workspace
 RUN git clone https://github.com/superboySB/SBDrone && chmod 777 -R . && cd SBDrone \
-    && ln -s ${ISAACSIM_PATH} _isaac_sim && dos2unix ./orbit.sh && ./orbit.sh --install && ./orbit.sh --extra
+    && ln -s ${ISAACSIM_PATH} _isaac_sim && dos2unix ./orbit.sh \
+    && ./orbit.sh -p -m pip install setuptools==63.2.0 \
+    && ./orbit.sh --install && ./orbit.sh --extra
 
 # Add symlink
 WORKDIR /isaac-sim

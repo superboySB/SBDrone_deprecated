@@ -26,7 +26,7 @@ INSTALL_REQUIRES = [
     # gym
     "gym==0.21.0",
     "importlib-metadata==4.13.0",
-    "setuptools==57.1.0",
+    "setuptools==63.2.0",
     "wheel<0.40.0",
     # data collection
     "h5py",
