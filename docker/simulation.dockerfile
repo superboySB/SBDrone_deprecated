@@ -115,6 +115,7 @@ RUN git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs && cd OmniIsa
 
 # Orbit
 ENV ISAACSIM_PATH=/isaac-sim
+ENV TERM=xterm
 WORKDIR /workspace
 RUN git clone https://github.com/superboySB/SBDrone && chmod 777 -R . && cd SBDrone \
     && ln -s ${ISAACSIM_PATH} _isaac_sim && dos2unix ./orbit.sh && ./orbit.sh --install && ./orbit.sh --extra
