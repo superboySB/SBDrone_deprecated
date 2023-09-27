@@ -131,7 +131,7 @@ while [[ $# -gt 0 ]]; do
             isaacsim_exe=$(extract_isaacsim_exe)
             echo "[INFO] Running isaac-sim from: ${isaacsim_exe}"
             shift # past argument
-            ${isaacsim_exe} --ext-folder ${ORBIT_PATH}/source/extensions $@
+            ${isaacsim_exe} --ext-folder ${ORBIT_PATH}/extensions $@
             # exit neatly
             break
             ;;

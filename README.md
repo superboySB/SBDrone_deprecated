@@ -41,6 +41,12 @@ echo -e "alias sbpy=$(pwd)/dzp_is_sb.sh" >> ${HOME}/.bashrc && source ~/.bashrc
 
 # 软件在环（Software-in-the-loop, SITL）仿真训练
 
+sbpy --python -c "print('HelloWorld.')"
+
+sbpy --python /isaac-sim/standalone_examples/api/omni.isaac.core/add_cubes.py
+
+ssh -L 8211:localhost:8211 -L 48010:localhost:48010 -p 17003 ps@36.189.234.178
+
 `source /opt/ros/foxy/setup.bash`
 
 # 硬件在环（Hardware-in-the-loop, HITL）调试

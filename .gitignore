@@ -7,12 +7,6 @@
 **/*.dmp
 **/.thumbs
 
-# No USD files allowed in the repo
-**/*.usd
-**/*.usda
-**/*.usdc
-**/*.usdz
-
 # Python
 .DS_Store
 **/*.egg-info/
@@ -48,9 +42,6 @@ _build
 **/*.dmp
 **/.thumbs
 
-# SBDrone
-sbdrone_image.tar.*
-
 
 # Isaac-Sim packman
 _isaac_sim
@@ -62,3 +53,6 @@ _build
 build/
 install/
 log/
+
+# SBDrone
+sbdrone_image.tar.*

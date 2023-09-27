@@ -115,7 +115,8 @@ COPY --from=isaac-sim /etc/vulkan/icd.d/nvidia_icd.json /etc/vulkan/implicit_lay
 # OmniIssacGym
 WORKDIR /workspace
 RUN git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs && cd OmniIsaacGymEnvs \
-    && /isaac-sim/python.sh -m pip install -U pip && /isaac-sim/python.sh -m pip install -e .
+    && /isaac-sim/python.sh -m pip install -U pip && /isaac-sim/python.sh -m pip install -e . \
+    && /isaac-sim/python.sh -m pip install urllib3==1.26
 
 # Orbit
 WORKDIR /workspace
