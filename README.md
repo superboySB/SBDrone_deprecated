@@ -31,10 +31,18 @@ docker exec -it sbdrone /bin/bash
 ```sh
 git clone https://github.com/superboySB/SBDrone && cd SBDrone
 
-ln -s /isaac-sim _isaac_sim  && dos2unix ./orbit.sh && bash ./orbit.sh --install && bash ./orbit.sh --extra
+ln -s /isaac-sim _isaac_sim  && dos2unix ./orbit.sh && bash ./orbit.sh --vscode
 
-bash ./orbit.sh -p source/standalone/workflows/rl_games/train.py --task Isaac-Ant-v0 --headless
+# bash ./orbit.sh -p source/standalone/workflows/rl_games/train.py --task Isaac-Ant-v0 --headless
+```
 
+To not restrict running commands only from the top of this repository (where the README.md is located), we recommend adding the executable to your environment variables in your .bashrc or .zshrc file as an alias command. This can be achieved running the following on your terminal:
+```sh
+# note: execute the command from where the `orbit.sh` executable exists
+# option1: for bash users
+echo -e "alias orbit=$(pwd)/orbit.sh" >> ${HOME}/.bashrc
+# option2: for zshell users
+echo -e "alias orbit=$(pwd)/orbit.sh" >> ${HOME}/.zshrc
 ```
 
 
@@ -106,7 +114,6 @@ bash /home/user/PX4-Autopilot/Tools/simulation/sitl_multiple_run.sh 5
 python sbrl/Storage.py
 
 python sbrl/
-
 
 ```
 

@@ -114,13 +114,15 @@ RUN git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs && cd OmniIsa
     && /isaac-sim/python.sh -m pip install -U pip && /isaac-sim/python.sh -m pip install -e .
 
 # Orbit
-ENV ISAACSIM_PATH=/isaac-sim
-ENV TERM=xterm
 WORKDIR /workspace
-RUN git clone https://github.com/superboySB/SBDrone && chmod 777 -R . && cd SBDrone \
-    && ln -s ${ISAACSIM_PATH} _isaac_sim && dos2unix ./orbit.sh \
-    && ./orbit.sh -p -m pip install setuptools==65.5.1 wheel==0.38.4 \
-    && ./orbit.sh --install && ./orbit.sh --extra
+RUN git clone https://github.com/superboySB/Orbit
+# [Not Stable Now, Not Install Now]
+# ENV ISAACSIM_PATH=/isaac-sim
+# ENV TERM=xterm
+# RUN git clone https://github.com/superboySB/Orbit && chmod 777 -R . && cd Orbit \
+#     && ln -s ${ISAACSIM_PATH} _isaac_sim && dos2unix ./orbit.sh \
+#     && ./orbit.sh -p -m pip install setuptools==65.5.1 wheel==0.38.4 \
+#     && ./orbit.sh --install && ./orbit.sh --extra
 
 # Add symlink
 WORKDIR /isaac-sim
@@ -128,6 +130,7 @@ RUN ln -s exts/omni.isaac.examples/omni/isaac/examples extension_examples
 COPY fastdds.xml ~/.ros/fastdds.xml
 COPY 10_nvidia.json /usr/share/glvnd/egl_vendor.d/10_nvidia.json
 RUN unset LD_LIBRARY_PATH && echo "export FASTRTPS_DEFAULT_PROFILES_FILE=~/.ros/fastdds.xml" > ~/.bashrc
+
 
 RUN echo "Finished! Enjoy!"
 WORKDIR /workspace
