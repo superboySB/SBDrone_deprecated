@@ -128,6 +128,10 @@ RUN git clone https://github.com/superboySB/Orbit
 #     && ./orbit.sh -p -m pip install setuptools==65.5.1 wheel==0.38.4 \
 #     && ./orbit.sh --install && ./orbit.sh --extra
 
+# [Optional] if your network is not very well and you just want to use my code directly
+WORKDIR /workspace
+RUN git clone https://github.com/superboySB/SBDrone.git
+
 # Add symlink
 WORKDIR /isaac-sim
 RUN ln -s exts/omni.isaac.examples/omni/isaac/examples extension_examples
