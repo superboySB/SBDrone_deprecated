@@ -31,19 +31,12 @@ docker exec -it sbdrone /bin/bash
 ```sh
 git clone https://github.com/superboySB/SBDrone && cd SBDrone
 
-ln -s /isaac-sim _isaac_sim  && dos2unix ./orbit.sh && bash ./orbit.sh --vscode
+ln -s /isaac-sim _isaac_sim  && dos2unix ./dzp_is_sb.sh && bash ./dzp_is_sb.sh --install
 
-# bash ./orbit.sh -p source/standalone/workflows/rl_games/train.py --task Isaac-Ant-v0 --headless
+# note: execute the command from where the `dzp_is_sb.sh` executable exists (e.g., for bash users)
+echo -e "alias sbpy=$(pwd)/dzp_is_sb.sh" >> ${HOME}/.bashrc && source ~/.bashrc
 ```
 
-To not restrict running commands only from the top of this repository (where the README.md is located), we recommend adding the executable to your environment variables in your .bashrc or .zshrc file as an alias command. This can be achieved running the following on your terminal:
-```sh
-# note: execute the command from where the `orbit.sh` executable exists
-# option1: for bash users
-echo -e "alias orbit=$(pwd)/orbit.sh" >> ${HOME}/.bashrc
-# option2: for zshell users
-echo -e "alias orbit=$(pwd)/orbit.sh" >> ${HOME}/.zshrc
-```
 
 
 # 软件在环（Software-in-the-loop, SITL）仿真训练

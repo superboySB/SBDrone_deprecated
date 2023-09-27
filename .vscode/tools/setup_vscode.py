@@ -53,6 +53,8 @@ def overwrite_python_analysis_extra_paths(orbit_settings: str) -> str:
     path_names = settings.split(",")
     path_names = [path_name.strip().strip('"') for path_name in path_names]
     path_names = ['"${workspaceFolder}/_isaac_sim/' + path_name + '"' for path_name in path_names if len(path_name) > 0]
+    # [From DZP]
+    path_names.append('"${workspaceFolder}/extensions/pegasus.simulator"')
     # combine them into a single string
     path_names = ",\n\t\t".expandtabs(4).join(path_names)
 

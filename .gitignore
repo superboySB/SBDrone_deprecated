@@ -39,14 +39,26 @@ _repo
 _build
 .lastformat
 
-# Internal
-# TODO: Remove this once we have a better way to handle internal files.
-source/extensions/omni.isaac.assets
-source/extensions/omni.isaac.orbit_assets
 
-# RL-Games
+# Outputs
+**/output/*
+*.tmp
 **/runs/*
 **/logs/*
+**/*.dmp
+**/.thumbs
 
 # SBDrone
 sbdrone_image.tar.*
+
+
+# Isaac-Sim packman
+_isaac_sim
+_repo
+_build
+.lastformat
+
+# ROS 2
+build/
+install/
+log/

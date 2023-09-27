@@ -68,6 +68,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean autoclean \
     && rm -rf /var/lib/apt/lists/*
 
+# [Optional] for ubuntu-desktop
+WORKDIR /workspace
+RUN wget https://install.launcher.omniverse.nvidia.com/installers/omniverse-launcher-linux.AppImage
+
 # Download the Vulkan SDK and extract the headers, loaders, layers and binary utilities
 ARG VULKAN_SDK_VERSION=1.3.224.1 
 RUN wget -q --show-progress \
@@ -134,3 +138,4 @@ RUN unset LD_LIBRARY_PATH && echo "export FASTRTPS_DEFAULT_PROFILES_FILE=~/.ros/
 
 RUN echo "Finished! Enjoy!"
 WORKDIR /workspace
+RUN chmod 777 -R .
